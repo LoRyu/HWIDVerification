@@ -1,2 +1,2 @@
 # Verify-HWID
-用socket的
+用socket写的
