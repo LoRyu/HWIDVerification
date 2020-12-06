@@ -29,20 +29,30 @@ public class Server {
             while (true) {
                 System.out.println(getTime() + "Wait for Client Connect");
                 socket = server.accept();
-                reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                System.out.println(getTime() + (client = socket.getInetAddress().getHostName()) + " Connected");
-                writeLog(getTime() + (client = socket.getInetAddress().getHostName()) + " Connected");
-                OutputStream os = socket.getOutputStream();
-                if (getClientMessage()) {
-                    System.out.println(getTime() + "LOGIN SUCCESS\n");
-                    writeLog(getTime() + "LOGIN SUCCESS");
-                    writeLog("");
-                    os.write("TRUE".getBytes());
-                } else {
+                if (null == socket.getInputStream()) {
+                    System.out.println(getTime() + (client = socket.getInetAddress().getHostName()) + " Connected");
+                    writeLog(getTime() + (client = socket.getInetAddress().getHostName()) + " Connected");
+                    OutputStream os = socket.getOutputStream();
                     System.out.println(getTime() + "LOGIN FAILED\n");
                     writeLog(getTime() + "LOGIN FAILED");
                     writeLog("");
                     os.write("FALSE".getBytes());
+                } else {
+                    reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    System.out.println(getTime() + (client = socket.getInetAddress().getHostName()) + " Connected");
+                    writeLog(getTime() + (client = socket.getInetAddress().getHostName()) + " Connected");
+                    OutputStream os = socket.getOutputStream();
+                    if (getClientMessage()) {
+                        System.out.println(getTime() + "LOGIN SUCCESS\n");
+                        writeLog(getTime() + "LOGIN SUCCESS");
+                        writeLog("");
+                        os.write("TRUE".getBytes());
+                    } else {
+                        System.out.println(getTime() + "LOGIN FAILED\n");
+                        writeLog(getTime() + "LOGIN FAILED");
+                        writeLog("");
+                        os.write("FALSE".getBytes());
+                    }
                 }
                 Thread.sleep(10);
             }
@@ -59,6 +69,7 @@ public class Server {
                 writeLog(getTime() + s);
                 List<String> s1 = ReadFileString();
                 for (int i = 0; i < s1.size(); i++) {
+                    if (null == s) return false;
                     if (s.equals(ReadFileString().get(i))) {
                         return true;
                     }
