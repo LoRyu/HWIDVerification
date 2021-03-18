@@ -28,7 +28,6 @@ public class Server {
             checkFilePath();
             System.out.println(getTime() + "\nServer Init Success\nHWID File Path: " + hwid + "\nLog File Path: " + log);
             writeLog(getTime() + "Server Init Success");
-            writeLog("");
             while (true) {
                 writeLog("");
                 System.out.println("\n" + getTime() + "Wait for Client Connect");
@@ -47,13 +46,13 @@ public class Server {
                                 e.printStackTrace();
                             }
                         }
+                        System.out.println(getTime() + "Time out!");
+                        writeLog(getTime() + "Time out!");
                         try {
                             socket.close();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        System.out.println(getTime() + "Time out!");
-                        writeLog(getTime() + "Time out!");
                     }
                 };
                 System.out.println(getTime() + (client = socket.getInetAddress().getHostName()) + " Connected");
