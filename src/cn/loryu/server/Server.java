@@ -26,11 +26,12 @@ public class Server {
         try {
             server = new ServerSocket(5233);
             checkFilePath();
-            System.out.println(getTime() + "\nServer Init Success\nHWID File Path: " + hwid + "\nLog File Path: " + log + "\n");
+            System.out.println(getTime() + "\nServer Init Success\nHWID File Path: " + hwid + "\nLog File Path: " + log);
             writeLog(getTime() + "Server Init Success");
             writeLog("");
             while (true) {
-                System.out.println(getTime() + "Wait for Client Connect");
+                writeLog("");
+                System.out.println("\n" + getTime() + "Wait for Client Connect");
                 socket = server.accept();
                 thread = new Thread() {
                     int i = 0;
@@ -61,23 +62,20 @@ public class Server {
                 if (null == socket.getInputStream()) {
                     OutputStream os = socket.getOutputStream();
                     thread.stop();
-                    System.out.println(getTime() + "LOGIN FAILED\n");
+                    System.out.println(getTime() + "LOGIN FAILED");
                     writeLog(getTime() + "LOGIN FAILED");
-                    writeLog("");
                     os.write("FALSE".getBytes());
                 } else {
                     reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     OutputStream os = socket.getOutputStream();
 
                     if (getClientMessage() && !thread.isAlive()) {
-                        System.out.println(getTime() + "LOGIN SUCCESS\n");
+                        System.out.println(getTime() + "LOGIN SUCCESS");
                         writeLog(getTime() + "LOGIN SUCCESS");
-                        writeLog("");
                         os.write("TRUE".getBytes());
                     } else {
-                        System.out.println(getTime() + "LOGIN FAILED\n");
+                        System.out.println(getTime() + "LOGIN FAILED");
                         writeLog(getTime() + "LOGIN FAILED");
-                        writeLog("");
                         if (!socket.isClosed())
                             os.write("FALSE".getBytes());
                     }
