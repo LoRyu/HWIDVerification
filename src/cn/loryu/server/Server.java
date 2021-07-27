@@ -12,9 +12,9 @@ public class Server {
     ServerSocket server;
     Socket socket;
     String path = String.valueOf(System.getProperty("user.dir"));
-    File file = new File(path + "\\HWIDServer");
-    File hwid = new File(path + "\\HWIDServer\\HWID.txt");
-    File log = new File(path + "\\HWIDServer\\Log.txt");
+    File file = new File(path + "/HWIDServer");
+    File hwid = new File(path + "/HWIDServer/HWID.txt");
+    File log = new File(path + "/HWIDServer/Log.txt");
     FileWriter fw;
     BufferedWriter writer;
     String client;
